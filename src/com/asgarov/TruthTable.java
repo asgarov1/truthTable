@@ -2,6 +2,7 @@ package com.asgarov;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -14,8 +15,12 @@ public class TruthTable {
 
     public static void main(String[] args) {
         List<Boolean[]> truthTable = createTruthTable(4);
+        filterAndCount(truthTable, row -> row[B] && !row[D]);
+    }
+
+    private static void filterAndCount(List<Boolean[]> truthTable, Predicate<Boolean[]> filterCondition) {
         System.out.println(truthTable.stream()
-                .filter(row -> row[B] && !row[D])
+                .filter(filterCondition)
                 .map(Arrays::toString)
                 .peek(System.out::println)
                 .count());
